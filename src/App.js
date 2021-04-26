@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import Screen from "./components/Screen"
+import Buttons from "./components/Buttons"
+import { useState } from 'react'
 
 function App() {
+  const [letters, setLetters] = useState("");
+  const [equal, setEqual] = useState(0);
+
+  const onClickOfEqualButtons = () => {
+    if(letters.includes("+")){
+      let ind = letters.indexOf("+");
+      const equal = parseInt(letters.substring(0,ind))+parseInt(letters.substring(ind+1, letters.length));
+      setEqual(equal);
+      console.log("Equal"+equal);
+    }
+    if(letters.includes("-")){
+      let ind = letters.indexOf("-");
+      const equal = parseInt(letters.substring(0,ind))-parseInt(letters.substring(ind+1, letters.length));
+      setEqual(equal);
+      console.log(equal);
+    }
+    if(letters.includes("*")){
+      let ind = letters.indexOf("*");
+      const equal = parseInt(letters.substring(0,ind))*parseInt(letters.substring(ind+1, letters.length));
+      setEqual(equal);
+      console.log(equal);
+    }
+    if(letters.includes("/")){
+      let ind = letters.indexOf("/");
+      const equal = (parseInt(letters.substring(0,ind)))/(parseInt(letters.substring(ind+1, letters.length)));
+      setEqual(equal);
+      console.log(equal);
+    }
+    console.log(equal);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header />
+      <Screen letters={letters} equal={equal}/>
+      <Buttons onClickOfButtons={(e)=> setLetters(prevState => prevState + e.target.textContent)} onClickOfEqualButtons={onClickOfEqualButtons}/>
     </div>
   );
 }
